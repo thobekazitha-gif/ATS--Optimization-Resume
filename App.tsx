@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+import React from 'react';
 import { resumeData } from './constants';
 import type { Project, Skill, Education, ContactInfo } from './types';
 import { LocationIcon, MailIcon, GithubIcon, LinkedinIcon } from './components/Icons';
@@ -48,24 +47,9 @@ const SkillItem: React.FC<{ skill: Skill }> = ({ skill }) => (
 
 const App: React.FC = () => {
   const { name, tagline, contact, summary, skills, projects, education, objective, additionalInfo } = resumeData;
-  const [url, setUrl] = useState('');
-  const [copyButtonText, setCopyButtonText] = useState('Copy Link');
-
-  useEffect(() => {
-    setUrl(window.location.href);
-  }, []);
 
   const handlePrint = () => {
     window.print();
-  };
-
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(url).then(() => {
-      setCopyButtonText('Copied!');
-      setTimeout(() => setCopyButtonText('Copy Link'), 2000);
-    }, () => {
-      alert('Failed to copy link.');
-    });
   };
 
   const getInitials = (name: string) => {
@@ -73,18 +57,8 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4 md:p-8 antialiased">
-      <div className="fixed top-4 right-4 print:hidden z-10 flex space-x-2">
-         <button
-          onClick={handleCopyLink}
-          className="bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-gray-700 transition-colors duration-300 flex items-center"
-          aria-label="Copy resume link"
-        >
-           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-          </svg>
-          {copyButtonText}
-        </button>
+    <div className="bg-gray-100 min-h-screen p-4 md:p-8 antialiased print:bg-white print:p-0">
+      <div className="fixed top-4 right-4 print:hidden z-10">
         <button
           onClick={handlePrint}
           className="bg-[#D8C4A6] text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-[#c9b494] transition-colors duration-300 flex items-center"
@@ -97,7 +71,7 @@ const App: React.FC = () => {
         </button>
       </div>
 
-      <main className="max-w-4xl mx-auto bg-white shadow-lg print:shadow-none print:m-0 grid grid-cols-1 md:grid-cols-3 min-h-[29.7cm]">
+      <main className="max-w-4xl mx-auto bg-white shadow-lg print:shadow-none print:m-0 grid grid-cols-1 md:grid-cols-3 print:grid-cols-3">
         {/* Left Column */}
         <aside className="md:col-span-1 bg-[#F3EFEA] p-8 print:p-8">
             <div className="flex flex-col items-center mb-12">
@@ -128,19 +102,6 @@ const App: React.FC = () => {
                   <p className="text-gray-600 text-xs">{edu.period}</p>
                 </div>
               ))}
-            </Section>
-            
-            <Section title="Shareable Link">
-              <div className="flex flex-col items-center">
-                {url && (
-                  <div className="p-2 bg-white rounded-lg shadow-inner">
-                    <QRCodeSVG value={url} size={110} level={"L"} />
-                  </div>
-                )}
-                 <p className="text-center text-xs text-gray-500 mt-2">
-                    Scan this code to view the live resume.
-                 </p>
-              </div>
             </Section>
 
             <Section title="Additional Information">
