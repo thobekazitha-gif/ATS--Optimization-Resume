@@ -17,7 +17,7 @@ const Section: React.FC<{ title: string; children: React.ReactNode; className?: 
 const ContactItem: React.FC<{ icon: React.ReactNode; text: string; link?: string }> = ({ icon, text, link }) => (
   <a href={link} target="_blank" rel="noopener noreferrer" className="group flex items-center text-sm text-gray-700 hover:text-[#A98B74] transition-colors">
     {icon}
-    <span>{text}</span>
+    <span className="break-all">{text}</span>
   </a>
 );
 
@@ -30,7 +30,7 @@ const ProjectItem: React.FC<{ project: Project }> = ({ project }) => (
     <a href={project.link.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm mb-2 block">
       🔗 {project.link.text}
     </a>
-    <ul className="list-disc list-inside space-y-1 text-sm text-gray-600">
+    <ul className="list-disc list-inside space-y-1 text-sm text-gray-600 break-words">
       {project.details.map((detail, index) => (
         <li key={index}>{detail}</li>
       ))}
@@ -71,12 +71,12 @@ const App: React.FC = () => {
         </button>
       </div>
 
-      <main className="max-w-4xl mx-auto bg-white shadow-lg print:shadow-none print:m-0 grid grid-cols-1 md:grid-cols-3 print:grid-cols-3">
+      <main className="max-w-4xl mx-auto bg-white shadow-lg print:shadow-none print:m-0 grid grid-cols-1 md:grid-cols-3 print:grid-cols-4">
         {/* Left Column */}
-        <aside className="md:col-span-1 bg-[#F3EFEA] p-8 print:p-8">
+        <aside className="md:col-span-1 print:col-span-1 bg-[#F3EFEA] p-6 sm:p-8 print:p-8">
             <div className="flex flex-col items-center mb-12">
-                <div className="w-28 h-28 bg-[#D8C4A6] rounded-full flex items-center justify-center mb-4 ring-4 ring-white/50">
-                    <span className="text-4xl font-bold text-white">{getInitials(name)}</span>
+                <div className="w-24 h-24 sm:w-28 sm:h-28 bg-[#D8C4A6] rounded-full flex items-center justify-center mb-4 ring-4 ring-white/50">
+                    <span className="text-3xl sm:text-4xl font-bold text-white">{getInitials(name)}</span>
                 </div>
             </div>
           <div className="space-y-8">
@@ -98,7 +98,13 @@ const App: React.FC = () => {
             <Section title="Education">
               {education.map(edu => (
                 <div key={edu.degree}>
-                  <p className="font-semibold text-gray-800 text-sm">{edu.degree}</p>
+                   {edu.link ? (
+                    <a href={edu.link} target="_blank" rel="noopener noreferrer" className="font-semibold text-gray-800 text-sm hover:text-[#A98B74] hover:underline transition-colors">
+                      {edu.degree}
+                    </a>
+                  ) : (
+                    <p className="font-semibold text-gray-800 text-sm">{edu.degree}</p>
+                  )}
                   <p className="text-gray-600 text-xs">{edu.period}</p>
                 </div>
               ))}
@@ -120,15 +126,15 @@ const App: React.FC = () => {
         </aside>
 
         {/* Right Column */}
-        <div className="md:col-span-2 p-8 print:p-8">
+        <div className="md:col-span-2 print:col-span-3 p-6 sm:p-8 print:p-8">
           <header className="mb-10">
-            <h1 className="text-5xl font-bold text-gray-800 tracking-tight">{name}</h1>
-            <p className="text-lg text-[#A98B74] mt-2 font-medium">{tagline}</p>
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 tracking-tight">{name}</h1>
+            <p className="text-base sm:text-lg text-[#A98B74] mt-2 font-medium">{tagline}</p>
           </header>
 
           <div className="space-y-10">
             <Section title="Professional Summary">
-              <p className="text-sm text-gray-600">{summary}</p>
+              <p className="text-sm text-gray-600 break-words">{summary}</p>
             </Section>
 
             <Section title="Project Experience">
@@ -136,7 +142,7 @@ const App: React.FC = () => {
             </Section>
 
             <Section title="Career Objective">
-              <p className="italic text-sm text-gray-600">{objective}</p>
+              <p className="italic text-sm text-gray-600 break-words">{objective}</p>
             </Section>
           </div>
         </div>

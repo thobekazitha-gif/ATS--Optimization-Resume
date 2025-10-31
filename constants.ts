@@ -105,6 +105,7 @@ export const resumeData: ResumeData = {
     { degree: "Higher Certificate in Information Technology (Software Engineering)", period: "Completed 2024" },
     { degree: "Capaciti Tech Career Accelerator — AI & Machine Learning Stream", period: "Completed 2025" },
     { degree: "Coursera: Professional Development Certificate", period: "Completed October 2025" },
+    { degree: "Coursera: AI Bootcamp Certificate", period: "Completed September 2025" },
   ],
   objective: "To advance my career as an AI Developer, mastering model deployment, cloud integration, and ethical AI development — while creating technology that connects innovation with human-centered impact.",
   additionalInfo: {

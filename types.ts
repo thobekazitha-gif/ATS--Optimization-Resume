@@ -23,6 +23,7 @@ export interface Skill {
 export interface Education {
   degree: string;
   period: string;
+  link?: string;
 }
 
 export interface ResumeData {
